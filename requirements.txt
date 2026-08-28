@@ -1,3 +1,5 @@
-fastapi
-uvicorn
-requests
+openclaw
+hermes-agent
+pydantic
+langchain>
+httpx
