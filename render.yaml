@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: hermes-agent
+    env: docker
+    plan: starter
+    region: oregon
+    envVars:
+      - key: OPENAI_API_KEY
+        value: <your-openai-api-key>
+    autoDeploy: true
+    healthCheckPath: /health
+    buildCommand: "pip install -r requirements.txt"
+    disk:
+      name: data
+      mountPath: /app/data
