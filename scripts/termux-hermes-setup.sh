@@ -2,11 +2,12 @@
 set -Eeuo pipefail
 
 # Hermes Agent + OpenClaw helper for standard Android Termux (aarch64).
+# Upstream stable channel currently returns 404; use the documented canary channel as a temporary workaround.
 # Hermes official Termux guide has reported a package issue; OpenClaw Android support may vary.
 # This script does not intentionally delete projects or user data.
 
 EXPECTED_FINGERPRINT="C572B5FDD1A29CCFA9A912B6840B0848E139156D"
-REPO_URL="https://hermes-assets.nousresearch.com/releases/termux/stable"
+REPO_URL="https://hermes-assets.nousresearch.com/releases/termux/canary"
 
 die() { printf '\n[ERROR] %s\n' "$*" >&2; exit 1; }
 confirm() {
@@ -37,7 +38,7 @@ hermes_action() {
   rm -f "$key"
   [ "$fingerprint" = "$EXPECTED_FINGERPRINT" ] || die "Hermes signing-key fingerprint mismatch; stopped."
   curl -fsSL "$REPO_URL/key.asc" -o "$PREFIX/etc/apt/keyrings/hermes-agent.asc"
-  printf '%s\n' "deb [signed-by=$PREFIX/etc/apt/keyrings/hermes-agent.asc] $REPO_URL hermes-stable main" > "$PREFIX/etc/apt/sources.list.d/hermes-agent.list"
+  printf '%s\n' "deb [signed-by=$PREFIX/etc/apt/keyrings/hermes-agent.asc] $REPO_URL hermes-canary main" > "$PREFIX/etc/apt/sources.list.d/hermes-agent.list"
   pkg update
   pkg install hermes-agent
   hermes --version || true
