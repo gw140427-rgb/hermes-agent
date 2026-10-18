@@ -23,7 +23,12 @@ hermes_action() {
   echo "[WARNING] Official Hermes Termux guide currently reports that the package is broken and a fix is in progress."
   echo "Guide: https://hermes-agent.nousresearch.com/docs/getting-started/termux"
   confirm "Attempt Hermes install/update anyway?" "HERMES-TRY" || return 0
+  echo "[NOTICE] Termux has pending package upgrades. A full upgrade helps prevent mismatched shared libraries."
+  confirm "Update all installed Termux packages before continuing?" "TERMUX-UPGRADE" || { echo "[INFO] Cancelled before changing packages."; return 0; }
+  pkg update
+  pkg upgrade -y
   pkg install -y curl gnupg
+  curl --version >/dev/null 2>&1 || die "curl still cannot start after package upgrades. Stop here and repair Termux packages before retrying."
   mkdir -p "$PREFIX/etc/apt/keyrings" "$PREFIX/etc/apt/sources.list.d"
   local key fingerprint
   key="$(mktemp)"
