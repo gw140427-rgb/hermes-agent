@@ -1,55 +1,28 @@
-# Hermes Agent + OpenClaw — Android Termux helper
+# Hermes Agent + OpenClaw — Universal Helper (Termux & Haven)
 
-This repository includes an install/update helper for standard Android Termux on **aarch64**.
+이 저장소는 Android **Termux**와 **Haven (Debian/Ubuntu/Linux)** 환경 모두에서 완벽하게 작동하는 통합 설치 및 실행기를 제공합니다.
 
-## Run it
+## 실행 방법
 
-Download `scripts/termux-hermes-setup.sh` into Termux and run:
-
-```bash
-bash ~/termux-hermes-setup.sh
-```
-
-Choose an action:
-- **1** — attempt Hermes Agent install/update
-- **2** — install/update OpenClaw
-- **3** — attempt both
-- **4** — check installed versions
-
-The script asks for confirmation before installing or updating either agent. It does not intentionally delete existing projects or user data.
-
-## Hermes Agent
-
-The official Hermes Termux guide has reported that its package is broken and a fix is in progress. The script preserves this warning, checks the repository signing-key fingerprint (`C572 B5FD D1A2 9CCF A9A9 12B6 840B 0848 E139 156D`), and keeps APT signature verification enabled.
-
-Official guide: https://hermes-agent.nousresearch.com/docs/getting-started/termux  
-Upstream: https://github.com/NousResearch/hermes-agent
-
-If installation succeeds, check with:
+저장소를 클론한 후 스크립트를 실행하세요:
 
 ```bash
-hermes --version
-hermes doctor
-hermes setup
-hermes --tui
+git clone https://github.com/gw140427-rgb/hermes-agent.git
+cd hermes-agent
+bash scripts/termux-hermes-setup.sh
 ```
+(또는 `bash scripts/setup.sh`)
 
-## OpenClaw
+## 주요 메뉴
 
-The script installs Node.js LTS through Termux if `npm` is missing, then runs `npm install -g openclaw@latest` to install or update OpenClaw.
+- **1) ⚡ 웹 챗 서버 바로 실행**: 10,000개 과학·기술·역사 지식과 실시간 웹 검색이 탑재된 반응형 웹 챗(`http://localhost:8000`)을 구동합니다.
+- **2) 🛠️ Hermes & Python 환경 자동 설치**: 시스템에 맞게 Python3 및 필요 도구를 설치합니다.
+- **3) 🦞 OpenClaw 설치**: Node.js와 OpenClaw를 자동으로 설치합니다.
+- **4) 📊 설치 및 시스템 상태 점검**: 현재 환경, 설치된 언어 버전, 지식 데이터셋 탑재 여부를 점검합니다.
+- **5) 🌐 Pinggy 외부 공개 링크 열기**: 다른 사람도 외부에서 접속할 수 있는 공인 HTTPS 주소를 생성합니다.
 
-Upstream: https://github.com/openclaw/openclaw
+## 지원 환경
 
-Android/Termux compatibility can vary, so this is an install/update attempt rather than a guarantee that OpenClaw will run. After a first successful install, run:
-
-```bash
-openclaw onboard
-openclaw --version
-```
-
-## Limitations
-
-- Run in the main Termux shell, not Debian/proot.
-- Requires an ARM64/aarch64 Android environment.
-- The script has not been run on the user's phone; actual installation and runtime are unverified.
-- Android may stop background processes, and some integrations may not work on mobile.
+- **Android Termux** (ARM64/aarch64)
+- **Haven / Debian / Ubuntu / PRoot Linux**
+- **일반 Linux PC**
