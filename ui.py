@@ -184,16 +184,23 @@ HTML_CHAT_UI = """<!DOCTYPE html>
         const chat = document.getElementById('chat-container');
         const input = document.getElementById('input-box');
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[c]);
+        }
+
         function appendMsg(text, type, meta = null) {
             const div = document.createElement('div');
             div.className = 'msg ' + type;
             
-            let html = text.replace(/\\n/g, '<br>');
+            let html = escapeHtml(text).replace(/\\n/g, '<br>');
             if (meta) {
-                const badgeClass = meta.source.includes('로컬') ? 'badge-local' : 'badge-web';
+                const source = String(meta.source ?? '');
+                const badgeClass = source.includes('로컬') ? 'badge-local' : 'badge-web';
                 html += `<div class="meta-badges">
-                    <span class="badge ${badgeClass}">📌 ${meta.source}</span>
-                    <span class="badge badge-time">⚡ ${meta.elapsed}s</span>
+                    <span class="badge ${badgeClass}">📌 ${escapeHtml(source)}</span>
+                    <span class="badge badge-time">⚡ ${escapeHtml(meta.elapsed)}s</span>
                 </div>`;
             }
             div.innerHTML = html;

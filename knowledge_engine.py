@@ -1,6 +1,7 @@
 # knowledge_engine.py
 # Hermes Agent 하이브리드 검색 엔진 (1만개 지식베이스 + 실시간 웹/위키 검색)
 
+import html
 import json
 import os
 import re
@@ -73,7 +74,7 @@ class KnowledgeEngine:
                 search_results = data.get("query", {}).get("search", [])
                 if search_results:
                     first = search_results[0]
-                    snippet = re.sub(r"<[^>]+>", "", first.get("snippet", ""))
+                    snippet = html.unescape(re.sub(r"<[^>]+>", "", first.get("snippet", "")))
                     return {
                         "source": "실시간 위키백과",
                         "title": first.get("title"),
