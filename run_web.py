@@ -4,14 +4,15 @@
 
 import http.server
 import json
+import os
 import socketserver
 from knowledge_engine import KnowledgeEngine
 from ui import HTML_CHAT_UI
 
-PORT = 8000
+PORT = int(os.getenv("PORT", "8000"))
 engine = KnowledgeEngine()
 
-class HermesWebHandler(http.server.SimpleHTTPRequestHandler):
+class HermesWebHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/" or self.path == "/chat":
             self.send_response(200)
@@ -25,15 +26,19 @@ class HermesWebHandler(http.server.SimpleHTTPRequestHandler):
             data = {"status": "ok", "items": len(engine.cache), "web_search": True}
             self.wfile.write(json.dumps(data, ensure_ascii=False).encode("utf-8"))
         else:
-            super().do_GET()
+            self.send_error(404, "Not Found")
 
     def do_POST(self):
         if self.path == "/api/chat":
             content_length = int(self.headers.get("Content-Length", 0))
             post_data = self.rfile.read(content_length)
-            req = json.loads(post_data.decode("utf-8"))
-            query = req.get("message", "")
-            
+            try:
+                req = json.loads(post_data.decode("utf-8"))
+                query = str(req.get("message", ""))
+            except (ValueError, AttributeError):
+                self.send_error(400, "Invalid JSON")
+                return
+
             result = engine.ask(query)
             
             self.send_response(200)
@@ -49,6 +54,7 @@ if __name__ == "__main__":
     print(f"📚 탑재된 지식: {len(engine.cache):,}개")
     print(f"🌐 접속 주소: http://localhost:{PORT}")
     print(f"==================================================")
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), HermesWebHandler) as httpd:
+    socketserver.ThreadingTCPServer.allow_reuse_address = True
+    socketserver.ThreadingTCPServer.daemon_threads = True
+    with socketserver.ThreadingTCPServer(("", PORT), HermesWebHandler) as httpd:
         httpd.serve_forever()
