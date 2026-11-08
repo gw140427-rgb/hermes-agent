@@ -49,9 +49,15 @@ class HermesWebHandler(http.server.BaseHTTPRequestHandler):
             self.send_error(404, "Not Found")
 
 if __name__ == "__main__":
+    llm_base = os.getenv("LLM_API_BASE", "")
+    llm_model = os.getenv("LLM_MODEL", "qwen2.5:7b")
     print(f"==================================================")
     print(f"⚡ Hermes Agent AI Web Server 준비 완료!")
     print(f"📚 탑재된 지식: {len(engine.cache):,}개")
+    if llm_base:
+        print(f"🧠 연결된 로컬 LLM: {llm_model} ({llm_base})")
+    else:
+        print(f"🧠 LLM 상태: 내장 1만 지식베이스 & 실시간 위키백과 검색 모드")
     print(f"🌐 접속 주소: http://localhost:{PORT}")
     print(f"==================================================")
     socketserver.ThreadingTCPServer.allow_reuse_address = True
