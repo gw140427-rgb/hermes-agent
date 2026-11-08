@@ -90,7 +90,7 @@ class KnowledgeEngine:
         if not api_base:
             return None
 
-        model = os.getenv("LLM_MODEL", "qwen2.5:7b").strip()
+        model = os.getenv("LLM_MODEL", "qwen3.5:9b").strip()
         system_prompt = "당신은 Hermes Agent의 고성능 AI 두뇌입니다. 질문에 한국어로 친절하고 정확하게 답해주세요."
         if context:
             system_prompt += f"\n\n[참고 지식 및 검색 자료]\n{context}"
@@ -148,7 +148,7 @@ class KnowledgeEngine:
         llm_reply = self.ask_llm(query, context=context_str)
         if llm_reply:
             elapsed = time.time() - start
-            model_name = os.getenv("LLM_MODEL", "qwen2.5:7b")
+            model_name = os.getenv("LLM_MODEL", "qwen3.5:9b")
             src_desc = f"⚡ Colab AI ({model_name})"
             if source_label:
                 src_desc += f" + {source_label}"

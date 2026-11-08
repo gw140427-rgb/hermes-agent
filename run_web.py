@@ -50,7 +50,7 @@ class HermesWebHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     llm_base = os.getenv("LLM_API_BASE", "")
-    llm_model = os.getenv("LLM_MODEL", "qwen2.5:7b")
+    llm_model = os.getenv("LLM_MODEL", "qwen3.5:9b")
     print(f"==================================================")
     print(f"⚡ Hermes Agent AI Web Server 준비 완료!")
     print(f"📚 탑재된 지식: {len(engine.cache):,}개")

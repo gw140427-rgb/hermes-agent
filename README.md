@@ -3,15 +3,15 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gw140427-rgb/hermes-agent/blob/main/colab_hermes_llm.ipynb)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
-![Model](https://img.shields.io/badge/LLM-Qwen%202.5%20%7C%20Gemma%202-orange.svg)
+![Model](https://img.shields.io/badge/LLM-Qwen%203.5%209B-orange.svg)
 
-10,000개 지식베이스와 실시간 웹 검색, 그리고 Google Colab T4 GPU의 **Qwen 2.5 / Gemma 2** 로컬 LLM 두뇌를 연결할 수 있는 초경량 AI 에이전트 시스템입니다.
+10,000개 지식베이스와 실시간 웹 검색, 그리고 Google Colab T4 GPU의 **Qwen 3.5 9B** 로컬 LLM 두뇌를 연결할 수 있는 초경량 AI 에이전트 시스템입니다.
 
 ---
 
 ## ⚡ 1클릭 Google Colab GPU 두뇌 실행
 
-무료 Google Colab T4 GPU를 사용해 최신 오픈소스 모델(**Qwen 2.5 7B** / **Gemma 2 9B**)을 구동하고 Hermes Agent와 연결할 수 있습니다:
+무료 Google Colab T4 GPU를 사용해 최신 오픈소스 모델(**Qwen 3.5 9B**)을 구동하고 Hermes Agent와 연결할 수 있습니다:
 
 👉 **[Google Colab에서 실행하기](https://colab.research.google.com/github/gw140427-rgb/hermes-agent/blob/main/colab_hermes_llm.ipynb)**
 
@@ -20,7 +20,7 @@
 3. 폰이나 서버의 Hermes Agent에 아래와 같이 연결:
    ```bash
    export LLM_API_BASE="https://xxxx.trycloudflare.com/v1"
-   export LLM_MODEL="qwen2.5:7b"
+   export LLM_MODEL="qwen3.5:9b"
    python3 run_web.py
    ```
 
